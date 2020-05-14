@@ -45,4 +45,4 @@ To add a constant, simply write its name and value in the next available row, en
   * This row should be used for headings (e.g. Name | Value | Description)  
 
 * Naming a sheet __*TEMPLATE*__ means it will **not** be read
-  * Using a template sheet is useful to track constant's names across multiple cars, and if correctly named (all uppercase) this sheet will be ignored by the tool.
+  * Using a template sheet is useful to track constants' names across multiple cars, and if correctly named (all uppercase) this sheet will be ignored by the tool.
