@@ -178,8 +178,23 @@ def LaunchButtonProcess():
     IDCar = CarListBox.curselection()  # Returns tuple of currently selected list element
     ConfigureATLAS(Cars[IDCar[0]], XLFile, ATLASConstantFile)
     root.destroy()  # GUI needs to close before calling os.system(), as this command does not end until ATLAS is closed.
-    print(('-' * 40) + ('\nYou can now close this window, or it will close when ATLAS is closed'))
-    os.system('ATLAS.exe')
+    print(('-' * 40) + '\nYou can now close this window, or it will close when ATLAS is closed')
+    fail = os.system('ATLAS.exe')
+    if fail:  # os.system returns 1 if it cannot complete the command. Most likely becuase ATLAS.exe is not found on
+        # PATH. Therefore show a little popup msg explaining the situation.
+        msg = 'ATLAS has been configured correctly, however subsequently could not be opened by the tool.\n' +\
+            'Please open manually. To fix, ensure the file ATLAS.exe is on your system PATH'
+
+        popup = Tk()
+        popup.title('Could not open ATLAS')
+        popup.iconbitmap(os.path.join(IconPath, IconFile))
+
+        label = Label(popup, text=msg)
+        label.pack(side="top", fill="x", pady=10)
+        B1 = Button(popup, text="Okay", command=popup.destroy)
+        B1.pack()
+
+        popup.mainloop()
 
 
 LaunchButton = Button(root, text='Launch', command=LaunchButtonProcess)
