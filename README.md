@@ -21,7 +21,7 @@ The use of Excel also lets you calculate constants in the same enviroment as whe
     
     *Note that you can point Atlas to a different txt file here if you wish (e.g. if you want to keep the txt file in the same location as the spreadsheet). You should never have to edit or open the txt file, but the option is there to move it if you really want to.*
     
-1. Open the ATLASConfigurator.exe tool. The first time you do this, you will have to set the paths to your spreadsheet and constants file. To do this, paste the file paths in to the respective boxes at the top.
+1. Open the ATLASConfigurator.exe tool. **You may get an Unknown Publisher Warning on opening, please accept the message and continue**. The first time you do open up, you will have to set the paths to your spreadsheet and constants file. To do this, paste the file paths in to the respective boxes at the top.
 1. Click **Update Settings**. The tool will read the sheet names of the spreadsheet you have defined and update the list below.
 1. Select the car for which you wish to configure ATLAS from the list, and click **Launch**.
 
