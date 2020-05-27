@@ -13,20 +13,37 @@ import sys
 # First of all need to set file locations for spreadsheet and ATLAS File to be replaced. This is stored in an ini file.
 # ini File is located in users appdata folder.
 config = configparser.ConfigParser()  # Object to parse variables in ini file
+
+
+def create_default_config(c):
+    """
+    adds some default values to the ConfigParser object, c. Used when the file does not yet exist/contain the
+    relevant info.
+    """
+    if not 'FilePaths' in c.sections():
+        c.add_section('FilePaths')
+    c['FilePaths']['UserXLFile'] = 'Enter\\Path\\To\\Spreadsheet.xlsx'
+    c['FilePaths']['ATLASConstants'] = 'Enter\\Path\\To\\ATLAS\\Constants.txt'
+    return c
+
+
 # Work out where it should be and check if it exists. If not, make it's directory and add some defaults. Else read it.
 iniDir = os.getenv('appdata') + '\\ATLASConfiguratorTool\\'
 iniFullFile = iniDir + 'config.ini'
 if not(os.path.isdir(iniDir)):
     os.mkdir(iniDir)
 if not(os.path.isfile(iniFullFile)):
-    config.add_section('FilePaths')
-    config['FilePaths']['UserXLFile'] = 'Enter\\Path\\To\\Spreadsheet.xlsx'
-    config['FilePaths']['ATLASConstants'] = 'Enter\\Path\\To\\ATLAS\\Constants.txt'
+    create_default_config(config)
 else:
     config.read(iniFullFile)
 
-XLFile = config['FilePaths']['UserXLFile']
-ATLASConstantFile = config['FilePaths']['ATLASConstants']
+try:
+    XLFile = config['FilePaths']['UserXLFile']
+    ATLASConstantFile = config['FilePaths']['ATLASConstants']
+except KeyError:  # May be raised if ini file exists but content is missing
+    create_default_config(config)
+    XLFile = config['FilePaths']['UserXLFile']
+    ATLASConstantFile = config['FilePaths']['ATLASConstants']
 
 # ----------------------------------------------------------------------------------------------------------------------
 # Now that we have those we can try to get a car list from the Excel File. Make it a function to use in the GUI too.
@@ -97,7 +114,7 @@ def UpdateLoadMessage(msg):
 
 
 UpdateLoadMessage(loadmsg)
-XLMessageLabel.grid(row=3,columnspan=2)
+XLMessageLabel.grid(row=3, columnspan=2)
 
 # ----------------------------------------------------------------------------------------------------------------------
 # -------------------------------------- Add the Main Selection List of Car Choices, and make it scrollable
